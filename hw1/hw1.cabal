@@ -48,7 +48,7 @@ cabal-version:       >=1.10
 
 library
   -- Modules exported by the library.
-  exposed-modules: Block1 Block2
+  -- exposed-modules:
 
   -- Modules included in this library but not exported.
   -- other-modules:
@@ -57,7 +57,7 @@ library
   -- other-extensions:
 
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <4.9, random
+  build-depends:       base >=4.10 && <4.11, random
 
   -- Directories containing source files.
   hs-source-dirs:      src
@@ -71,13 +71,17 @@ executable hw1
   main-is:             Main.hs
 
   -- Modules included in this executable, other than Main.
-  -- other-modules:
+  other-modules: Block1 
+                 Block2 
+                 Block3
+                 Block4
+                 Block5
 
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
 
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <4.9
+  build-depends:       base >=4.10 && <4.11, random
 
   -- Directories containing source files.
   hs-source-dirs:      src

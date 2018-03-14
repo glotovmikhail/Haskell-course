@@ -4,8 +4,8 @@ import           Data.List
 
 order3 :: (Ord a) => (a, a, a) -> (a, a, a)
 order3 (a, b, c)  = (x, y, z)
-				where
-					[x, y, z] = sort [a, b, c]
+  where
+    [x, y, z] = sort [a, b, c]
 
 smartReplicate :: [Int] -> [Int]
 smartReplicate []     = []

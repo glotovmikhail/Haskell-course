@@ -13,7 +13,7 @@ day :: [Day]
 day = [MON, TUE, WED, THU, FRI, SAT, SUN]
 
 nextDay :: Day -> Day
-nextDay d 
+nextDay d
     | d == SUN = MON
     | otherwise = succ d
 
@@ -63,7 +63,7 @@ data City = City
     , houses       :: NonEmpty House
     } deriving (Show)
 
-data NewLordFail = NoCastle | AlreadyLord 
+data NewLordFail = NoCastle | AlreadyLord
     deriving (Eq, Show)
 
 buildCastle :: City -> Castle -> (Bool, City)
@@ -128,7 +128,7 @@ mul a Z     = Z
 mul Z b     = Z
 mul a (S b) = add a (mul a b)
 
-instance Ord Nat 
+instance Ord Nat
   where
     compare Z Z         = EQ
     compare (S _) Z     = GT
@@ -138,8 +138,8 @@ instance Ord Nat
 -- hard version
 
 isPrime :: Nat -> Bool
-isPrime Z = True
-isPrime (S Z) = False
+isPrime Z         = True
+isPrime (S Z)     = False
 isPrime (S (S a)) = isPrime a
 
 divNat :: Nat -> Nat -> Nat
@@ -187,7 +187,7 @@ addN (Node lst@(x:_) left right) k
 removeLeft :: (Ord a) => BSTree a -> ([a], BSTree a)
 removeLeft (Node lst Nil right) = (lst, right)
 removeLeft (Node l left r) =
-    let (ret, newLeft) = removeLeft left 
+    let (ret, newLeft) = removeLeft left
     in
         (ret, Node l newLeft r)
 

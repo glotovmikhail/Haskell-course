@@ -20,14 +20,14 @@ toList (x:|xs) = x:xs
 instance Foldable Pair where
     foldMap :: Monoid m => (a -> m) -> Pair a -> m
     foldMap f (Pair x y) = f x `mappend` f y
-    foldr :: (a -> b -> b) -> b -> Pair a -> b 
+    foldr :: (a -> b -> b) -> b -> Pair a -> b
     foldr f ac (Pair x y) = f x (f y ac)
 
 instance Foldable NonEmpty where
     foldMap :: Monoid m => (a -> m) -> NonEmpty a -> m
     foldMap f (x:|xs) = f x `mappend` foldMap f xs
     foldr :: (a -> b -> b) -> b -> NonEmpty a -> b
-    foldr f ac (x:|xs) = f x $ foldr f ac xs 
+    foldr f ac (x:|xs) = f x $ foldr f ac xs
 
 instance Foldable BSTree where
     foldMap :: Monoid m => (a -> m) -> BSTree a -> m

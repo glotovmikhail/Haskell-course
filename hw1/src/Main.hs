@@ -7,8 +7,8 @@ import Block4
 import Block5
 
 import Data.List
-import System.Random (newStdGen, randomRs)
 import Data.Monoid (Sum (..))
+import System.Random (newStdGen, randomRs)
 
 randomIntList :: Int -> Int -> Int -> IO [Int]
 randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
@@ -17,7 +17,7 @@ sepLine :: IO()
 sepLine = putStrLn "============================="
 
 printTestName :: String -> IO()
-printTestName a = do 
+printTestName a = do
     sepLine
     putStrLn(a)
     sepLine
@@ -26,7 +26,7 @@ printTestRes :: (Show a, Eq a) => a -> a -> IO()
 printTestRes result expected = do
     if result == expected
     then putStrLn "OK"
-    else do 
+    else do
           putStrLn "FAILED :("
           putStrLn "Expected: "
           print $ expected
@@ -68,7 +68,7 @@ testStringSum = let strings  = [ "1", "1 2 3", " 1", "1 ", "\t1\t", "\t12345\t"
 
 
 testMergeSort :: IO()
-testMergeSort = do 
+testMergeSort = do
                  example <- randomIntList 8 (-10) 10
                  let result   = mergeSort example
                      expected = sort example
@@ -122,13 +122,13 @@ testTree = let tree = Block3.fromList [3, 12, 5, 0, 6, 4, 3, 12]
 testFoldable :: IO()
 testFoldable = let result   = foldr (++) "" (Pair "test" "complete")
                    expected = "testcomplete"
-               in 
+               in
                    printTestRes result expected
 
 testSplitJoin :: IO()
 testSplitJoin = let s      = "prihodite na vibori 18 marta"
                     result = joinWith 'i' (toList (splitOn 'i' s))
-                in 
+                in
                     printTestRes result s
 
 testMaybeConcat :: IO()

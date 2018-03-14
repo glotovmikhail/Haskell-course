@@ -1,10 +1,10 @@
 module Block5 where
 
+import Block4 (NonEmpty ((:|)))
+import Data.Either (partitionEithers)
+import Data.Maybe (fromMaybe)
 import Data.Monoid (Sum (..))
 import Data.Semigroup (Max (..), Semigroup (..))
-import Block4 (NonEmpty ((:|)))
-import Data.Either   (partitionEithers)
-import Data.Maybe    (fromMaybe)
 
 maybeConcat :: [Maybe [a]] -> [a]
 maybeConcat s = fromMaybe [] $ mconcat s
@@ -18,12 +18,12 @@ eitherConcat s = mconcatPair $ partitionEithers s
 instance Semigroup (NonEmpty t) where
     (<>) (x :| xs) (y :| ys) = x :| (xs ++ (y:ys))
 
-data ThisOrThat a b = This a 
-                    | That b 
-                    | Both a b 
+data ThisOrThat a b = This a
+                    | That b
+                    | Both a b
     deriving (Eq, Show)
 
-instance (Semigroup a, Semigroup b) => Semigroup (ThisOrThat a b) 
+instance (Semigroup a, Semigroup b) => Semigroup (ThisOrThat a b)
   where
     (<>) (This a) (This b)     = This (a <> b)
     (<>) (That a) (That b)     = That (a <> b)
@@ -35,11 +35,11 @@ instance (Semigroup a, Semigroup b) => Semigroup (ThisOrThat a b)
     (<>) (That c) (Both a b)   = Both a (c <> b)
     (<>) x y                   = y <> x
 
-data Builder = One Char 
-             | Many [Builder] 
+data Builder = One Char
+             | Many [Builder]
     deriving (Show, Eq)
 
-instance Semigroup Builder 
+instance Semigroup Builder
   where
     (<>) x (Many [])         = x
     (<>) (Many []) y         = y
@@ -48,7 +48,7 @@ instance Semigroup Builder
     (<>) a@(One _) (Many ys) = Many $ a:ys
     (<>) (Many xs) b@(One _) = Many (xs ++ [b])
 
-instance Monoid Builder 
+instance Monoid Builder
   where
     mempty = Many []
     mappend = (<>)

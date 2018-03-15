@@ -1,8 +1,5 @@
 module Block2 where
 
-import Data.List
-import System.Random (newStdGen, randomRs)
-
 -- remove element
 
 pop :: Int -> [a] -> Maybe a

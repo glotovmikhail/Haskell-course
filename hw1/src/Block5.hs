@@ -1,9 +1,9 @@
 module Block5 where
 
-import Block4 (NonEmpty ((:|)))
-import Data.Either (partitionEithers)
-import Data.Maybe (fromMaybe)
-import Data.Monoid (Sum (..))
+import Block4         (NonEmpty ((:|)))
+import Data.Either    (partitionEithers)
+import Data.Maybe     (fromMaybe)
+import Data.Monoid    (Sum (..))
 import Data.Semigroup (Max (..), Semigroup (..))
 
 maybeConcat :: [Maybe [a]] -> [a]
@@ -15,7 +15,8 @@ eitherConcat s = mconcatPair $ partitionEithers s
     mconcatPair :: (Monoid a, Monoid b) => ([a], [b]) -> (a, b)
     mconcatPair (a, b) = (mconcat a, mconcat b)
 
-instance Semigroup (NonEmpty t) where
+instance Semigroup (NonEmpty t) 
+  where
     (<>) (x :| xs) (y :| ys) = x :| (xs ++ (y:ys))
 
 data ThisOrThat a b = This a

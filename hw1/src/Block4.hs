@@ -17,19 +17,22 @@ fromList _      = undefined
 toList :: NonEmpty a -> [a]
 toList (x:|xs) = x:xs
 
-instance Foldable Pair where
+instance Foldable Pair 
+  where
     foldMap :: Monoid m => (a -> m) -> Pair a -> m
     foldMap f (Pair x y) = f x `mappend` f y
     foldr :: (a -> b -> b) -> b -> Pair a -> b
     foldr f ac (Pair x y) = f x (f y ac)
 
-instance Foldable NonEmpty where
+instance Foldable NonEmpty 
+  where
     foldMap :: Monoid m => (a -> m) -> NonEmpty a -> m
     foldMap f (x:|xs) = f x `mappend` foldMap f xs
     foldr :: (a -> b -> b) -> b -> NonEmpty a -> b
     foldr f ac (x:|xs) = f x $ foldr f ac xs
 
-instance Foldable BSTree where
+instance Foldable BSTree 
+  where
     foldMap :: Monoid m => (a -> m) -> BSTree a -> m
     foldMap _ Nil = mempty
     foldMap f (Node lst left right) = foldMap f left `mappend`
@@ -39,7 +42,7 @@ instance Foldable BSTree where
 splitOn :: (Eq a) => a -> [a] -> NonEmpty [a]
 splitOn split = foldr add (fromList [[]])
             where
-              add chr list@(x:|xs)
+              add chr (x:|xs)
                             | chr == split = fromList ([]:x:xs)
                             | otherwise    = fromList ((chr:x):xs)
 

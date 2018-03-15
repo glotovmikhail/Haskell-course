@@ -19,7 +19,7 @@ sepLine = putStrLn "============================="
 printTestName :: String -> IO()
 printTestName a = do
     sepLine
-    putStrLn(a)
+    putStrLn a
     sepLine
 
 printTestRes :: (Show a, Eq a) => a -> a -> IO()
@@ -33,11 +33,13 @@ printTestRes result expected = do
           putStrLn "Found: "
           print $ result
 
+
 testOrder3 :: IO()
 testOrder3 = let list3    = permutations [13, 2, 45]
                  result   = map (order3 . toTuple) list3
                  expected = map (toTuple . sort) list3
                  toTuple [a, b, c] = (a, b, c)
+                 toTuple _         = undefined
              in
                  printTestRes result expected
 
@@ -164,11 +166,11 @@ main = do
         printTestName "|| Testing mergeSort"
         testMergeSort
         putStrLn "||==== Block 3 Testing ====||"
-        printTestName "|| Testing days ||"
+        printTestName "|| Testing days"
         testDays
-        printTestName "|| Testing Nat ||"
+        printTestName "|| Testing Nat"
         testNat
-        printTestName "|| Testing BSTree ||"
+        printTestName "|| Testing BSTree"
         testTree
         putStrLn "||==== Block 4 Testing ====||"
         printTestName "|| Testing Foldable"
@@ -176,10 +178,10 @@ main = do
         printTestName "|| Testing splitOn & joinWith"
         testSplitJoin
         putStrLn "||==== Block 5 Testing ====||"
-        printTestName "|| Testing maybeConcat ||"
+        printTestName "|| Testing maybeConcat"
         testMaybeConcat
-        printTestName "|| Testing eitherConcat ||"
+        printTestName "|| Testing eitherConcat"
         testEitherConcat
-        printTestName "|| Testing stringBuilder ||"
+        printTestName "|| Testing stringBuilder"
         testStringBuilder
         printTestName "|| All tests passed ||"

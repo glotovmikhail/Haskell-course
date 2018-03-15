@@ -1,8 +1,9 @@
 module Block3 where
 
-import Data.List
-import Data.List.NonEmpty (NonEmpty (..), fromList, (<|))
+import Data.List          (iterate)
+import Data.List.NonEmpty (NonEmpty (..), (<|))
 import Data.Maybe
+
 
 --days
 
@@ -45,7 +46,7 @@ newtype House = House Family
     deriving (Show)
 
 newtype Castle = Castle
-    { lord :: Maybe Man
+    { lordC :: Maybe Man
     } deriving (Show)
 
 newtype Walls = Walls
@@ -53,14 +54,14 @@ newtype Walls = Walls
     } deriving (Show, Eq)
 
 data ProtectBuilds = ProtectBuilds
-    { castle :: Castle
-    , walls  :: Maybe Walls
+    { castleC :: Castle
+    , wallsC  :: Maybe Walls
     } deriving (Show)
 
 data City = City
-    { protectBuild :: Maybe ProtectBuilds
-    , building     :: Maybe Building
-    , houses       :: NonEmpty House
+    { protectBuildC :: Maybe ProtectBuilds
+    , buildingC     :: Maybe Building
+    , housesC       :: NonEmpty House
     } deriving (Show)
 
 data NewLordFail = NoCastle | AlreadyLord
@@ -120,12 +121,13 @@ add a Z     = a
 add a (S b) = S (add a b)
 
 sub :: Nat -> Nat -> Nat
+sub Z (S _)     = undefined
 sub a Z         = a
 sub (S a) (S b) = sub a b
 
 mul :: Nat -> Nat -> Nat
-mul a Z     = Z
-mul Z b     = Z
+mul _ Z     = Z
+mul Z _     = Z
 mul a (S b) = add a (mul a b)
 
 instance Ord Nat
@@ -170,12 +172,13 @@ size (Node lst left right) = size left + length lst + size right
 size Nil                   = 0
 
 contains :: (Show a, Ord a) => BSTree a -> a -> Bool
-contains Nil _ = False
+contains Nil _           = False
 contains (Node (x:_) left right) k
                              | x > k  = contains left k
                              | x < k  = contains right k
                              | x == k = True
 contains (Node [] _ _) _ = False
+contains _ _             = undefined
 
 addN :: (Ord a) => BSTree a -> a -> BSTree a
 addN Nil x = Node [x] Nil Nil
@@ -183,13 +186,15 @@ addN (Node lst@(x:_) left right) k
                              | x > k  = Node lst (addN left k) right
                              | x < k  = Node lst left (addN right k)
                              | x == k = Node (k:lst) left right
+addN _ _   = undefined
 
 removeLeft :: (Ord a) => BSTree a -> ([a], BSTree a)
 removeLeft (Node lst Nil right) = (lst, right)
-removeLeft (Node l left r) =
+removeLeft (Node l left r)      =
     let (ret, newLeft) = removeLeft left
     in
         (ret, Node l newLeft r)
+removeLeft _                    = undefined
 
 remove :: (Ord a) => BSTree a -> a -> BSTree a
 remove Nil _ = Nil
@@ -202,6 +207,7 @@ remove (Node lst@(x:xs) left right) k
                              | x == k = Node newLst left newRight
                                             where
                                               (newLst, newRight) = removeLeft right
+remove _ _   = undefined
 
 fromList :: (Ord a) => [a] -> BSTree a
 fromList = foldl addN Nil

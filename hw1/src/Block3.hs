@@ -1,8 +1,11 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module Block3 where
 
 import Data.List          (iterate)
 import Data.List.NonEmpty (NonEmpty (..), (<|))
-import Data.Maybe
+import Data.Maybe         (isNothing)
+import Data.Monoid        (Monoid (..))
 
 
 --days
@@ -15,7 +18,7 @@ day = [MON, TUE, WED, THU, FRI, SAT, SUN]
 
 nextDay :: Day -> Day
 nextDay d
-    | d == SUN = MON
+    | d == SUN  = MON
     | otherwise = succ d
 
 afterDays :: Day -> Int -> Day
@@ -87,7 +90,8 @@ countPeople (City _ _ houses) = foldl (\x (House family) -> x + fromEnum family 
 
 buildWalls :: City -> Walls -> (Bool, City)
 buildWalls city@(City (Just (ProtectBuilds (Castle (Just lord)) Nothing)) building houses) walls
-           | countPeople city >= 10 = (True, City (Just (ProtectBuilds (Castle (Just lord)) (Just walls)))
+           | countPeople city >= 10 = (True, City (Just (ProtectBuilds (Castle (Just lord)) 
+                                                                       (Just walls)))
                                   building houses)
            | otherwise              = (False, city)
 buildWalls city _ = (False, city)
@@ -148,8 +152,8 @@ divNat :: Nat -> Nat -> Nat
 divNat _ Z = error "Division by Zero"
 divNat Z _ = Z
 divNat a b
-    | a == b = (S Z)
-    | a < b = Z
+    | a == b    = (S Z)
+    | a < b     = Z
     | otherwise = (S (divNat (sub a b) b))
 
 modDivNat :: Nat -> Nat -> Nat
@@ -205,9 +209,17 @@ remove (Node lst@(x:xs) left right) k
                              | x == k && right == Nil && left == Nil = Nil
                              | x == k && right == Nil = left
                              | x == k = Node newLst left newRight
-                                            where
-                                              (newLst, newRight) = removeLeft right
+                                    where
+                                      (newLst, newRight) = removeLeft right
 remove _ _   = undefined
 
 fromList :: (Ord a) => [a] -> BSTree a
 fromList = foldl addN Nil
+
+instance Foldable BSTree 
+  where
+    foldMap :: Monoid m => (a -> m) -> BSTree a -> m
+    foldMap _ Nil                   = mempty
+    foldMap f (Node lst left right) = foldMap f left `mappend`
+                                      foldMap f lst `mappend`
+                                      foldMap f right

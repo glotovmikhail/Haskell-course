@@ -2,13 +2,17 @@
 
 module Block4 where
 
-import Block3 (BSTree (..))
+import Data.Semigroup (Semigroup (..))
 
 data Pair a = Pair a a
     deriving (Show)
 
 data NonEmpty a = a :| [a]
     deriving (Show)
+
+instance Semigroup (NonEmpty t) 
+  where
+    (<>) (x :| xs) (y :| ys) = x :| (xs ++ (y:ys))
 
 fromList :: [a] -> NonEmpty a
 fromList (x:xs) = x:|xs
@@ -30,14 +34,6 @@ instance Foldable NonEmpty
     foldMap f (x:|xs) = f x `mappend` foldMap f xs
     foldr :: (a -> b -> b) -> b -> NonEmpty a -> b
     foldr f ac (x:|xs) = f x $ foldr f ac xs
-
-instance Foldable BSTree 
-  where
-    foldMap :: Monoid m => (a -> m) -> BSTree a -> m
-    foldMap _ Nil = mempty
-    foldMap f (Node lst left right) = foldMap f left `mappend`
-                                      foldMap f lst `mappend`
-                                      foldMap f right
 
 splitOn :: (Eq a) => a -> [a] -> NonEmpty [a]
 splitOn split = foldr add (fromList [[]])

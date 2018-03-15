@@ -1,10 +1,8 @@
 module Block5 where
 
-import Block4         (NonEmpty ((:|)))
 import Data.Either    (partitionEithers)
 import Data.Maybe     (fromMaybe)
-import Data.Monoid    (Sum (..))
-import Data.Semigroup (Max (..), Semigroup (..))
+import Data.Semigroup (Semigroup (..))
 
 maybeConcat :: [Maybe [a]] -> [a]
 maybeConcat s = fromMaybe [] $ mconcat s
@@ -15,10 +13,6 @@ eitherConcat s = mconcatPair $ partitionEithers s
     mconcatPair :: (Monoid a, Monoid b) => ([a], [b]) -> (a, b)
     mconcatPair (a, b) = (mconcat a, mconcat b)
 
-instance Semigroup (NonEmpty t) 
-  where
-    (<>) (x :| xs) (y :| ys) = x :| (xs ++ (y:ys))
-
 data ThisOrThat a b = This a
                     | That b
                     | Both a b
@@ -26,15 +20,15 @@ data ThisOrThat a b = This a
 
 instance (Semigroup a, Semigroup b) => Semigroup (ThisOrThat a b)
   where
-    (<>) (This a) (This b)     = This (a <> b)
-    (<>) (That a) (That b)     = That (a <> b)
-    (<>) (This a) (That b)     = Both a b
+    (<>) (This a)   (This b)   = This (a <> b)
+    (<>) (That a)   (That b)   = That (a <> b)
+    (<>) (This a)   (That b)   = Both a b
     (<>) (Both a b) (This c)   = Both (a <> c) b
     (<>) (Both a b) (That c)   = Both a (b <> c)
     (<>) (Both a b) (Both c d) = Both (a <> c) (b <> d)
-    (<>) (This c) (Both a b)   = Both (c <> a) b
-    (<>) (That c) (Both a b)   = Both a (c <> b)
-    (<>) x y                   = y <> x
+    (<>) (This c)   (Both a b) = Both (c <> a) b
+    (<>) (That c)   (Both a b) = Both a (c <> b)
+    (<>) x          y          = y <> x
 
 data Builder = One Char
              | Many [Builder]
@@ -51,7 +45,7 @@ instance Semigroup Builder
 
 instance Monoid Builder
   where
-    mempty = Many []
+    mempty  = Many []
     mappend = (<>)
 
 fromString :: String -> Builder

@@ -6,7 +6,7 @@ pop :: Int -> [a] -> Maybe a
 pop i list = fst (remove i list)
 
 remove :: Int -> [a] -> (Maybe a, [a])
-remove _ [] = (Nothing, [])
+remove _ []     = (Nothing, [])
 remove 0 (x:xs) = (Just x, xs)
 remove i (x:xs) = (fst rm, x : snd rm)
   where
@@ -15,17 +15,17 @@ remove i (x:xs) = (fst rm, x : snd rm)
 -- mergesort
 
 merge :: [Int] -> [Int] -> [Int]
-merge [] y = y
-merge x [] = x
+merge [] y          = y
+merge x []          = x
 merge (x:xs) (y:ys) = if x <= y
                       then x : merge xs (y:ys)
                       else y : merge (x:xs) ys
 
 mergeSort :: [Int] -> [Int]
-mergeSort [] = []
+mergeSort []  = []
 mergeSort [a] = [a]
-mergeSort x = let half = div (length x) 2
-  in
-    merge (mergeSort (take half x)) (mergeSort (drop half x))
+mergeSort x   = let half = div (length x) 2
+                in
+                    merge (mergeSort (take half x)) (mergeSort (drop half x))
 
 

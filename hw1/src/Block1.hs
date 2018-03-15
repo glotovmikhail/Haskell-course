@@ -1,6 +1,6 @@
 module Block1 where
 
-import Data.List
+import Data.List (replicate, sort)
 
 order3 :: (Ord a) => (a, a, a) -> (a, a, a)
 order3 (a, b, c)  = (x, y, z)

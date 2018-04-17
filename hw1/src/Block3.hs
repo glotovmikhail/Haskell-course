@@ -7,7 +7,6 @@ import Data.List.NonEmpty (NonEmpty (..), (<|))
 import Data.Maybe         (isNothing)
 import Data.Monoid        (Monoid (..))
 
-
 --days
 
 data Day = MON | TUE | WED | THU | FRI | SAT | SUN

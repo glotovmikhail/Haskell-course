@@ -54,15 +54,3 @@ stream :: (Eq a) => [a] -> Parser a [a]
 stream s = Parser $ \c -> if s `isPrefixOf` c
                           then Just (s, snd (splitAt (length s) c))
                           else Nothing
-
-deleteSpaces :: Parser Char String
-deleteSpaces = many (satisfy isSpace)
-
-bracketsParse :: Parser Char String
-bracketsParse = deleteSpaces *>
-                (concat <$> many ((\l m r -> l:m ++ [r])
-                        <$> element '(' <*> bracketsParse 
-                                        <*> (element ')' <* deleteSpaces))) <* deleteSpaces
-
-eofBracketsParse :: Parser Char String
-eofBracketsParse = bracketsParse <* eof

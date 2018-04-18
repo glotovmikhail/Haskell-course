@@ -1,23 +1,22 @@
 module Test.Unit 
        ( hspecTestTree,
-         hspecTestStrSum
        ) where
 
 import Block1 (IntExpr (..)
               , evalInt)
 import Block2 (stringSum)
+import Block3 (Parser (..)
+              , eofBracketsParse)
 
 import Test.Tasty       (TestTree)
-import Test.Tasty.Hspec (Spec, describe, it, shouldBe, testSpec, context)
+import Test.Tasty.Hspec (Spec, describe, it, shouldBe, shouldSatisfy, testSpec, context)
 
 hspecTestTree :: IO TestTree
-hspecTestTree = testSpec "ArithmeticExpr" arithmetic_Expr
+hspecTestTree = testSpec "All Tests" all_tests
 
-hspecTestStrSum :: IO TestTree
-hspecTestStrSum = testSpec "StingSum" stringSum_test
 
-arithmetic_Expr :: Spec
-arithmetic_Expr = do
+all_tests :: Spec
+all_tests = do
     describe "check expressions" $
         context "there a = 1, b = 2, c = 3, d = 4, e = 12" $ do
           let [a', b', c', d', e'] = [1 :: Int, 2, 3, 4, 12] 
@@ -61,21 +60,18 @@ arithmetic_Expr = do
               evalInt (IntPow d b) `shouldBe` Right (d' ^ b')
           it "negative pow -- (c ^ a)" $
               evalInt (IntPow c a) `shouldBe` Left "Negative arg in exponent"
-
-
-stringSum_test :: Spec
-stringSum_test = do
+    describe "START CHECKING STRING SUM" $ do
     describe "good tests" $
         context "only valid input" $ do
           let s1 = "\n1\t\n3   555  -1\n\n\n-5"
           let s2 = "\t-12345\t"
           let s3 = "123\t\n\t\n\t\n321 -4 -40"
           let stringSumCor s = sum (map read (words s))
-          it "\"\n1\t\n3   555  -1\n\n\n-5\"" $
+          it "\"\\n1\\t\\n3   555  -1\\n\\n\\n-5\"" $
               stringSum s1 `shouldBe` Just (stringSumCor s1)
-          it "\"\t-12345\t\"" $
+          it "\"\\t-12345\\t\"" $
               stringSum s2 `shouldBe` Just (stringSumCor s2)
-          it "\"123\t\n\t\n\t\n321 -4 -40\"" $
+          it "\"123\\t\\n\\t\\n\\t\\n321 -4 -40\"" $
               stringSum s3 `shouldBe` Just (stringSumCor s3)
     describe "mustfail tests" $
         context "only invalid input" $ do
@@ -97,4 +93,3 @@ stringSum_test = do
               stringSum s5 `shouldBe` Nothing
           it "\"1+\"" $
               stringSum s6 `shouldBe` Nothing
-

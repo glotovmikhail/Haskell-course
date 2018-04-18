@@ -1,15 +1,14 @@
 module Main where
 
-import Hedgehog (check)
+import Hedgehog   (check)
 import Test.Tasty (defaultMain, testGroup)
 
-import Test.Unit (hspecTestTree, hspecTestStrSum)
-import Test.Prop (prop_bin)
+import Test.Unit  (hspecTestTree, hspecTestStrSum)
+import Test.Prop  (prop_bin)
 
 main :: IO()
-main = do
-        test1'2
-        test1'1
+main = print "run test1'1 to check expressions, test1'2 to check StrSum, test2 to check bin"
+        
 
 test1'1 :: IO ()
 test1'1 = hspecTestTree >>= \unitTests ->

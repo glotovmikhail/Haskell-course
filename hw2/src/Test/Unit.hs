@@ -7,7 +7,7 @@ import Block1 (IntExpr (..)
               , evalInt)
 import Block2 (stringSum)
 
-import Test.Tasty (TestTree)
+import Test.Tasty       (TestTree)
 import Test.Tasty.Hspec (Spec, describe, it, shouldBe, testSpec, context)
 
 hspecTestTree :: IO TestTree

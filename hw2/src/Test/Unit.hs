@@ -5,11 +5,9 @@ module Test.Unit
 import Block1 (IntExpr (..)
               , evalInt)
 import Block2 (stringSum)
-import Block3 (Parser (..)
-              , eofBracketsParse)
 
 import Test.Tasty       (TestTree)
-import Test.Tasty.Hspec (Spec, describe, it, shouldBe, shouldSatisfy, testSpec, context)
+import Test.Tasty.Hspec (Spec, describe, it, shouldBe, testSpec, context)
 
 hspecTestTree :: IO TestTree
 hspecTestTree = testSpec "All Tests" all_tests

@@ -22,6 +22,17 @@
   (major1) == 4 && (major2) == 10 && (minor) <= 1)
 #endif /* MIN_VERSION_base */
 
+/* package hedgehog-0.5.3 */
+#ifndef VERSION_hedgehog
+#define VERSION_hedgehog "0.5.3"
+#endif /* VERSION_hedgehog */
+#ifndef MIN_VERSION_hedgehog
+#define MIN_VERSION_hedgehog(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  5 || \
+  (major1) == 0 && (major2) == 5 && (minor) <= 3)
+#endif /* MIN_VERSION_hedgehog */
+
 /* package tasty-1.0.1.1 */
 #ifndef VERSION_tasty
 #define VERSION_tasty "1.0.1.1"
@@ -32,6 +43,17 @@
   (major1) == 1 && (major2) <  0 || \
   (major1) == 1 && (major2) == 0 && (minor) <= 1)
 #endif /* MIN_VERSION_tasty */
+
+/* package tasty-hedgehog-0.2.0.0 */
+#ifndef VERSION_tasty_hedgehog
+#define VERSION_tasty_hedgehog "0.2.0.0"
+#endif /* VERSION_tasty_hedgehog */
+#ifndef MIN_VERSION_tasty_hedgehog
+#define MIN_VERSION_tasty_hedgehog(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  2 || \
+  (major1) == 0 && (major2) == 2 && (minor) <= 0)
+#endif /* MIN_VERSION_tasty_hedgehog */
 
 /* package tasty-hspec-1.1.4 */
 #ifndef VERSION_tasty_hspec

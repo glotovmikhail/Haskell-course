@@ -72,17 +72,19 @@ executable hw2
   -- .hs or .lhs file containing the Main module.
   main-is:             Main.hs
 
-  ghc-options: -Wall
+  ghc-options: -Wall -fno-warn-unused-matches
 
   -- Modules included in this executable, other than Main.
   other-modules: Block1
+                 Block2
                  Test.Unit
+                 Test.Prop
 
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
 
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.10 && <4.11, tasty, tasty-hspec
+  build-depends:       base >=4.10 && <4.11, tasty, tasty-hspec, hedgehog, tasty-hedgehog
 
   -- Directories containing source files.
   hs-source-dirs:      src

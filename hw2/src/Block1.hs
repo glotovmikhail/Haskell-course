@@ -46,3 +46,9 @@ evalInt (IntDiv x y) = evalInt y >>= (\k -> if k == 0
 evalInt (IntPow x y) = evalInt y >>= (\k -> if k < 0
                  then Left "Negative arg in exponent"
                  else evalInt x >>= (\t -> Right (t ^ k)))
+
+-- Task 2
+
+bin :: Int -> [[Int]]
+bin 0 = [[]]
+bin n = bin (n - 1) >>= \s -> [0:s, 1:s]

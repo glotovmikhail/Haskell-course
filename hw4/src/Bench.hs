@@ -34,7 +34,7 @@ main :: IO ()
 main = defaultMainWith (defaultConfig {reportFile = Just "nub.html"
                                       , timeLimit = 30
                                       })
-   [ bgroup "lenght = 25"
+   [ bgroup "length = 25"
      [ bench "Lib" $ nf nub [1 :: Int, 1, 3, 3, 2, 6, 7, 3, 2, 5, 6, 3, 7, 8, 5, 4, 8, 9, 7, 7, 3, 6, 4, 8, 9]
      , bench "Sort" $ nf nub' [1 :: Int, 1, 3, 3, 2, 6, 7, 3, 2, 5, 6, 3, 7, 8, 5, 4, 8, 9, 7, 7, 3, 6, 4, 8, 9]
      , bench "Set" $ nf nubA [1 :: Int, 1, 3, 3, 2, 6, 7, 3, 2, 5, 6, 3, 7, 8, 5, 4, 8, 9, 7, 7, 3, 6, 4, 8, 9]

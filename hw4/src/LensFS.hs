@@ -14,6 +14,7 @@ import System.Directory      (doesFileExist, listDirectory)
 import System.FilePath       (splitPath, takeFileName, (</>), splitExtension)
 import Control.Applicative   (Const (..))
 import Data.Tagged           (Tagged (..))
+import Data.Tree             (Tree(..))
 
 -- FileSystem
 
@@ -63,7 +64,7 @@ lsAll = contents . each . con name lsAll
     con a b fun obj = a fun obj *> b fun obj
 
 renameExt :: String -> FS -> FS
-renameExt ext fs = fs & contents . traversed . filtered isFile . name %~ change
+renameExt ext = contents . traversed . filtered isFile . name %~ change
   where
     change p = let (fn, _) = splitExtension p 
                in fn ++ "." ++ ext
@@ -88,3 +89,14 @@ from is =
   let fab = unTagged $ is (Tagged id)
       fba = getConst . is Const
   in iso fab fba
+
+treeToFS :: Tree FilePath -> FS
+treeToFS (Node nm [])   = File nm
+treeToFS (Node nm s) = Dir nm $ map treeToFS s
+
+fsToTree :: FS -> Tree FilePath
+fsToTree (File nm)      = Node nm []
+fsToTree (Dir nm conts) = Node nm $ map fsToTree conts
+
+fsIso :: Iso FS (Tree FilePath)
+fsIso = iso fsToTree treeToFS

@@ -25,6 +25,7 @@ library
   -- other-extensions:
   build-depends:       base >=4.10 && <4.11
                      , containers
+                     , tagged
                      , template-haskell
                      , directory
                      , filepath
@@ -44,6 +45,7 @@ executable hw4
   -- other-extensions:
   build-depends:       base >=4.10 && <4.11
                      , containers
+                     , tagged
                      , template-haskell
                      , directory
                      , filepath

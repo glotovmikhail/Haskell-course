@@ -77,6 +77,17 @@
   (major1) == 4 && (major2) == 16 && (minor) <= 1)
 #endif /* MIN_VERSION_lens */
 
+/* package tagged-0.8.5 */
+#ifndef VERSION_tagged
+#define VERSION_tagged "0.8.5"
+#endif /* VERSION_tagged */
+#ifndef MIN_VERSION_tagged
+#define MIN_VERSION_tagged(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  8 || \
+  (major1) == 0 && (major2) == 8 && (minor) <= 5)
+#endif /* MIN_VERSION_tagged */
+
 /* package tasty-1.1.0.1 */
 #ifndef VERSION_tasty
 #define VERSION_tasty "1.1.0.1"
